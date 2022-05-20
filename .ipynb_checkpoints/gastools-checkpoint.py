@@ -1,3 +1,13 @@
+#Imports
+import pandas as pd
+import hvplot.pandas
+from pathlib import Path
+import os
+import json
+import requests
+from dotenv import load_dotenv
+import matplotlib.pyplot as plt
+
 # Current Gas prices
 def get_current_gas(coin):
     url = f"https://owlracle.info/{str(coin).lower()}/gas"
@@ -17,6 +27,8 @@ def get_current_gas(coin):
 
 # Chart Gas History
 def create_gas_chart(coin_list):
+    eth_historic_gas_url = f"https://owlracle.info/eth/history"
+    eth_historic_gas_response = requests.get(eth_historic_gas_url).json()
     coin_df = pd.DataFrame(eth_historic_gas_response)
     coin_df = coin_df[['timestamp', 'gasPrice']]
     timeframe = coin_df['timestamp']
@@ -26,7 +38,9 @@ def create_gas_chart(coin_list):
     df['ETH'] = gas_stats
     index = pd.to_datetime(timeframe.astype(str))
     df.index = index
-
+    
+    avax_historic_gas_url = f"https://owlracle.info/avax/history"
+    avax_historic_gas_response = requests.get(avax_historic_gas_url).json()
     df2 = pd.DataFrame(avax_historic_gas_response)
     df2 = df2[['timestamp', 'gasPrice']]
     timeframe = df2['timestamp']
@@ -36,7 +50,9 @@ def create_gas_chart(coin_list):
     df['AVAX'] = gas_stats
     index = pd.to_datetime(timeframe.astype(str))
     df.index = index
-
+    
+    poly_historic_gas_url = f"https://owlracle.info/poly/history"
+    poly_historic_gas_response = requests.get(poly_historic_gas_url).json()
     df4 = pd.DataFrame(poly_historic_gas_response)
     df4 = df4[['timestamp', 'gasPrice']]
     timeframe = df4['timestamp']
