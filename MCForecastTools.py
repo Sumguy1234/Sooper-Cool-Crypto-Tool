@@ -58,7 +58,7 @@ class MCSimulation:
                 raise AttributeError("Sum of portfolio weights must equal one.")
         
         # Calculate daily return if not within dataframe
-        if not "daily_return" in portfolio_data.columns.get_level_values(1).unique():
+        if not "close" in portfolio_data.columns.get_level_values(1).unique():
             close_df = portfolio_data.xs('close',level=1,axis=1).pct_change()
             tickers = portfolio_data.columns.get_level_values(0).unique()
             column_names = [(x,"daily_return") for x in tickers]
