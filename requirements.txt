@@ -4,7 +4,7 @@ matplotlib==3.4.3
 pandas==1.3.4
 datetime==4.4
 requests==2.27.1             
-hvplot==0.8.0a17.post1+ge1070c3          
+hvplot==0.8.0         
 ipywidgets==7.6.5
 bokeh==2.4.2
 alpaca_trade_api==2.0.0
