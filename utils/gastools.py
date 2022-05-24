@@ -33,37 +33,55 @@ def get_current_gas(coin):
     return
 
 # Chart Gas History
-def create_gas_chart(coin_list):
-    coin_df = pd.DataFrame(eth_historic_gas_response)
-    coin_df = coin_df[['timestamp', 'gasPrice']]
-    timeframe = coin_df['timestamp']
-    gas_stats = []
-    for row in coin_df['gasPrice']:
-        gas_stats.append(row['close'])
-    df['ETH'] = gas_stats
+def create_gas_chart():
+    eth_historic_gas_url = f"https://owlracle.info/eth/history"
+    eth_historic_gas_response = requests.get(eth_historic_gas_url).json()
+    eth_df = pd.DataFrame(eth_historic_gas_response)
+    eth_df = eth_df[['timestamp', 'gasPrice']]
+    timeframe = eth_df['timestamp']
+    gas_stats_eth = []
+    for row in eth_df['gasPrice']:
+        gas_stats_eth.append(row['close'])
+    gas_df = pd.DataFrame(gas_stats_eth)
+    gas_df['ETH'] = gas_df
     index = pd.to_datetime(timeframe.astype(str))
-    df.index = index
+    gas_df.index = index
 
-    df2 = pd.DataFrame(avax_historic_gas_response)
-    df2 = df2[['timestamp', 'gasPrice']]
-    timeframe = df2['timestamp']
-    gas_stats = []
-    for row in df2['gasPrice']:
-        gas_stats.append(row['close'])
-    df['AVAX'] = gas_stats
+    avax_historic_gas_url = f"https://owlracle.info/avax/history"
+    avax_historic_gas_response = requests.get(avax_historic_gas_url).json()
+    avax_df = pd.DataFrame(avax_historic_gas_response)
+    avax_df = avax_df[['timestamp', 'gasPrice']]
+    timeframe = avax_df['timestamp']
+    gas_stats_avax = []
+    for row in avax_df['gasPrice']:
+        gas_stats_avax.append(row['close'])
+    gas_df['AVAX'] = gas_stats_avax
     index = pd.to_datetime(timeframe.astype(str))
-    df.index = index
+    gas_df.index = index
 
-    df4 = pd.DataFrame(poly_historic_gas_response)
-    df4 = df4[['timestamp', 'gasPrice']]
-    timeframe = df4['timestamp']
-    gas_stats = []
-    for row in df4['gasPrice']:
-        gas_stats.append(row['close'])
-    df['POLY'] = gas_stats
+    bsc_historic_gas_url = f"https://owlracle.info/bsc/history"
+    bsc_historic_gas_response = requests.get(bsc_historic_gas_url).json()
+    bsc_df = pd.DataFrame(bsc_historic_gas_response)
+    bsf_df = bsc_df[['timestamp', 'gasPrice']]
+    timeframe = bsc_df['timestamp']
+    gas_stats_bsc = []
+    for row in bsc_df['gasPrice']:
+        gas_stats_bsc.append(row['close'])
+    gas_df['BSC'] = gas_stats_bsc
     index = pd.to_datetime(timeframe.astype(str))
-    df.index = index
+    gas_df.index = index
 
-    df.hvplot(title='Gas Trends for ETH, AVAX & POLY', value_label='Gas in gwei', legend='top', height=500, width=700, color=['black','red','purple'])
-        
-    return
+    poly_historic_gas_url = f"https://owlracle.info/poly/history"
+    poly_historic_gas_response = requests.get(poly_historic_gas_url).json()
+    poly_df = pd.DataFrame(poly_historic_gas_response)
+    poly_df = poly_df[['timestamp', 'gasPrice']]
+    timeframe = poly_df['timestamp']
+    gas_stats_poly = []
+    for row in poly_df['gasPrice']:
+        gas_stats_poly.append(row['close'])
+    gas_df['POLY'] = gas_stats_poly
+    index = pd.to_datetime(timeframe.astype(str))
+    gas_df.index = index
+
+    gas_plot=gas_df.hvplot(title='Gas Trends for ETH, AVAX, BSC & POLY', value_label='Gas in gwei', legend='top', height=500, width=700, color=['black','black','red','gold','purple'])
+    return gas_plot
