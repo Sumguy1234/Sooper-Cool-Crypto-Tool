@@ -42,7 +42,6 @@ Usage Instructions:
 	ipywidgets
 	matplotlib.pyplot
 	bokeh.models.formatters
-	ipywidgets
 	pathlib
 	MCForecastTools
 	alpaca_trade_api
