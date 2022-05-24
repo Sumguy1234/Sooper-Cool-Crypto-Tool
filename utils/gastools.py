@@ -15,7 +15,7 @@ from bokeh.models.formatters import DatetimeTickFormatter
 
 
 def get_current_gas(coin):
-    load_dotenv('C:/Users/johnm/Desktop/BootCamp/Sooper-Cool-Crypto-Tool/sample.env') #.env file with keys here
+    load_dotenv('sample.env') #.env file with keys here
     owlracle_api=os.getenv("API_KEY")
     url = f"https://owlracle.info/{str(coin).lower()}/gas?{owlracle_api}"
     response = requests.get(url).json()
